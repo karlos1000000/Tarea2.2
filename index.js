@@ -1,8 +1,8 @@
 //importaciones importantes
 import express, { json } from 'express'
-//import db from './api-tienda/config/db.js'
+import db from './api-tienda/config/db.js'
 //import productRoutes from './api-tienda/routes/products.js';
-//import cartRoutes from './api-tienda/routes/cart.js';
+import cartRouter from './api-tienda/routes/cart.js';
 
 const app = express();
 app.use(express.json());
@@ -12,11 +12,11 @@ app.disable('x-powered-by')
 app.use(json()) //Middleware  para capturar el body
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 //Rutas
 //app.use('/api', productRoutes);
-//app.use('/api', cartRoutes);
+app.use('/carts', cartRouter);
 
 //Manejo de error por ruta inexistente
 app.use((req, res) => {

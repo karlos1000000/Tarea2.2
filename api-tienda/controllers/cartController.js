@@ -1,20 +1,21 @@
 import db from '../config/db.js';
+import { ValidateCart } from '../schemas/cart.schema.js';
 
 export class cartController{
 
     static getCartByUserId = (req, res) => {
         
         const { userId } = req.params;
-        const consulta =  "select c.producto_id, p.nombre, p.precio, c.cantidad from carrito as c inner join productos as p on c.producto_id = p.id WHERE c.usuario_id =  ?";
+        const consulta =  "select c.producto_id, p.nombre as Nombre, p.precio as Precio, c.cantidad as Cantidad from carrito as c inner join productos as p on c.producto_id = p.id WHERE c.usuario_id =  ?";
 
         try {
             db.query(consulta, [userId], (err, results) => {
                 
-                if(error)
+                if(err)
                 {
                     return res.status(400)
                                 .json({
-                                    message: "Error al obtener el carrito",
+                                    message: "Error al obtener el carrito (error en el query)" + err,
                                     error: true
                                 });
                 }
@@ -36,7 +37,7 @@ export class cartController{
         } catch (error) {
             return res.status(400)
                         .json({
-                            message: "Error al obtener el carrito",
+                            message: "Error al obtener el carrito (error en el catch)",
                             error: true
                         });
         } 
@@ -66,7 +67,7 @@ export class cartController{
                 {
                     return res.status(400)
                                 .json({
-                                    message: "Error al crear el carrito",
+                                    message: "Error al crear el carrito (error en el query)",
                                     error: true
                                 });
                 }
@@ -79,7 +80,7 @@ export class cartController{
         } catch (error) {
             return res.status(400)
                         .json({
-                            message: "Error al crear el carrito",
+                            message: "Error al crear el carrito (error en el catch)",
                             error: true
                         });
         } 
