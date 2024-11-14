@@ -1,5 +1,5 @@
-import db from '../config/db.js';
-import bcrypt from 'bcrypt'
+//import db from '../config/db.js';
+//import bcrypt from 'bcrypt'
 //import del esquema si usamos
 
 export const getAllProducts = (req, res) => {
