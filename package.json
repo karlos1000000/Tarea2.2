@@ -1,7 +1,9 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.21.1",
-    "mysql2": "^3.11.4"
+    "mysql2": "^3.11.4",
+    "zod": "^3.23.8"
   },
   "name": "tarea2.2",
   "version": "1.0.0",
