@@ -3,7 +3,7 @@ import { ValidateCart } from '../schemas/cart.schema.js';
 
 export class cartController{
 
-    static getCartByUserId = (req, res) => {
+    static getCartByUser = (req, res) => {
         
         const { userId } = req.params;
         const consulta =  "select c.producto_id, p.nombre as Nombre, p.precio as Precio, c.cantidad as Cantidad from carrito as c inner join productos as p on c.producto_id = p.id WHERE c.usuario_id =  ?";
@@ -44,30 +44,35 @@ export class cartController{
 
     }
 
-    static createCart = (req, res) => {
-        const consulta = "INSERT INTO carrito (usuario_id, producto_id, detalle_id, cantidad, fecha_agregado) VALUES (?, ?, ?, ?, ?)";
+    static addToCart = (req, res) => {
+        const consulta = `INSERT INTO carrito (usuario_id, producto_id, detalle_id, cantidad, fecha_agregado) 
+                        VALUES (?, ?, ?, ?, ?)`;
         const data = req.body;
-       
+
+        if(typeof data.fecha_agregado === "string") {
+            data.fecha_agregado = new Date(data.fecha_agregado);
+        }
+
         const { success, error } = ValidateCart(data);
 
         if(!success){
             return res.status(400)
                         .json({
-                            message: "Error al crear el carrito",
+                            message: "Error al crear el carrito (error en el schema)" + error,
                             error: true
                         });
         }
 
         try {
-            const { usuarioId, productoId, detalle_id, cantidad } = data;
-            const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            db.query(consulta, [usuarioId, productoId, detalle_id, cantidad, fecha], (err, results) => {
+            const { usuario_id, producto_id, detalle_id, cantidad , fecha_agregado} = data;
+            //const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            db.query(consulta, [usuario_id, producto_id, detalle_id, cantidad, fecha_agregado], (error, results) => {
                 
                 if(error)
                 {
                     return res.status(400)
                                 .json({
-                                    message: "Error al crear el carrito (error en el query)",
+                                    message: "Error al crear el carrito (error en el query)  " + error,
                                     error: true
                                 });
                 }
@@ -86,12 +91,12 @@ export class cartController{
         } 
     }
 
-    static deleteCart = (req, res) => {
-        const { id } = req.params;
-        const consulta = "DELETE FROM carrito WHERE id = ?";
+    static removeFromCart = (req, res) => {
+        const { id  } = req.params;
+        const consulta = "DELETE  FROM carrito WHERE id = ?";
 
         try {
-            db.query(consulta, [id], (err, results) => {
+            db.query(consulta, [id], (error, results) => {
                 
                 if(error)
                 {

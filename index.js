@@ -16,7 +16,7 @@ const PORT = process.env.PORT;
 
 //Rutas
 //app.use('/api', productRoutes);
-app.use('/carts', cartRouter);
+app.use('/cart', cartRouter);
 
 //Manejo de error por ruta inexistente
 app.use((req, res) => {

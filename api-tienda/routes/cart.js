@@ -4,9 +4,9 @@ import { cartController } from '../controllers/cartController.js';
 
 const cartRouter = Router();
 
-cartRouter.get('/:userId', cartController.getCartByUserId);//Obtener todos los items del carrito por usuario
-cartRouter.post('/', cartController.createCart);//Crear un item en el carrito
-cartRouter.delete('/:userId', cartController.deleteCart);//Eliminar un item del carrito
+cartRouter.get('/:userId', cartController.getCartByUser);//Obtener todos los items del carrito por usuario
+cartRouter.post('/', cartController.addToCart);//Crear un item en el carrito
+cartRouter.delete('/:id', cartController.removeFromCart);//Eliminar un item del carrito
 
 
 export default cartRouter;
