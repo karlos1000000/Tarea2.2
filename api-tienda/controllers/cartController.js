@@ -102,20 +102,23 @@ export class cartController{
                 {
                     return res.status(400)
                                 .json({
-                                    message: "Error al eliminar un articulo del carrito",
+                                    message: "Error al eliminar un articulo del carrito (error en el query)  " + error,
                                     error: true
                                 });
                 }
 
                 return res  .header("Content-Type", "application/json")
                             .status(200)
-                            .json({data});
+                            .json({
+                                message: "Articulo eliminado del carrito",
+                                error: false
+                            });
 
             });
         } catch (error) {
             return res.status(400)
                         .json({
-                            message: "Error al eliminar el carrito",
+                            message: "Error al eliminar el carrito (error en el catch)  " + error,
                             error: true
                         });
         } 
