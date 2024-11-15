@@ -3,6 +3,7 @@ import express, { json } from 'express'
 import db from './api-tienda/config/db.js'
 //import productRoutes from './api-tienda/routes/products.js';
 import cartRouter from './api-tienda/routes/cart.js';
+import productsRouter from './api-tienda/routes/products.js';
 
 const app = express();
 app.use(express.json());
@@ -15,7 +16,7 @@ app.use(json()) //Middleware  para capturar el body
 const PORT = process.env.PORT;
 
 //Rutas
-//app.use('/api', productRoutes);
+app.use('/products', productsRouter);
 app.use('/cart', cartRouter);
 
 //Manejo de error por ruta inexistente

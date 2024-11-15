@@ -1,12 +1,12 @@
 import db from '../config/db.js';
-//import { ValidateProduct } from '../schemas/product.schema.js';
+import { ValidateProduct } from '../schemas/product.schema.js';
 
 
 export class productsController {
 
     // Obtener todos los productos
     static getAllProducts = (req, res) => {
-        const consulta = "SELECT p.id as id, p.nombre, p.descripcion, p.precio, p.stock, p.categoria FROM productos";
+        const consulta = "SELECT id, nombre, descripcion, precio, stock, categoria FROM productos";
 
         try {
             db.query(consulta, (err, results) => {
@@ -79,12 +79,23 @@ export class productsController {
 
     // Crear un nuevo producto
     static createProduct = (req, res) => {
-        const consulta = "INSERT INTO productos (nombre, descripcion, precio, stock, categoria, fecha_creacion) VALUES (?, ?, ?, ?, ?, ?)";
-        const { nombre, descripcion, precio, stock, categoria, fecha_creacion } = req.body;
+        const consulta = "INSERT INTO productos (nombre, descripcion, precio, stock, categoria) VALUES (?, ?, ?, ?, ?)";
+        const { nombre, descripcion, precio, stock, categoria} = req.body;
+        
+        const data = req.body;
 
+        const { success, error } = ValidateProduct(data);
+
+        if(!success){
+            return res.status(400)
+                        .json({
+                            message: "Error al crear el producto (error en el schema)" + error,
+                            error: true
+                        });
+        }
 
         try {
-            db.query(consulta, [nombre, descripcion, precio, stock, categoria, fecha_creacion], (err, results) => {
+            db.query(consulta, [nombre, descripcion, precio, stock, categoria], (err, results) => {
                 
                 if (err) {
                     return res.status(400)
