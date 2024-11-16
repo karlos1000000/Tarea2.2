@@ -1,6 +1,7 @@
 --Notas para la ejecucion del proyecto
 
 --Dependencias
+    utilizar comando npm install [dependencia] para instalarlas.
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -8,7 +9,7 @@
     "mysql2": "^3.11.4",
     "zod": "^3.23.8"
 
---Ubicacion del archivo 'Index.js'
+--Ubicacion del archivo 'index.js'
     desplazarse a la carpeta Tarea2.2
     'cd Tarea2.2'
 
