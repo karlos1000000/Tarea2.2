@@ -18,6 +18,36 @@
     para poder conectarse a su base de datos local 
     en el archivo '.env'
 
+--Uso de postman
+PRODUCTS
+GetAll http://localhost:3000/products
+GetById http://localhost:3000/products/:id
+Create http://localhost:3000/products
+Update http://localhost:3000/products/:id
+Delete http://localhost:3000/products/:id
+
+CARTS
+GetById http://localhost:3000/cart/:id
+Create http://localhost:3000/cart
+Delete http://localhost:3000/cart
+
+--Objetos recomendados para la prueba del post de la api
+PRODUCTS
+{
+    "nombre": "Ejemplo Nombre",
+    "descripcion": "Ejemplo Descripcion",
+    "precio": 100,
+    "stock": 400,
+    "categoria": "Ejemplo Categoria"
+}
+
+CARTS
+{
+    "usuario_id":2,
+    "producto_id":3,
+    "detalle_id":1,
+    "cantidad":4,
+}
 
 --Integrantes del proyecto
     Carlos Osegueda
