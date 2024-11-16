@@ -45,14 +45,11 @@ export class cartController{
     }
 
     static addToCart = (req, res) => {
-        const consulta = `INSERT INTO carrito (usuario_id, producto_id, detalle_id, cantidad, fecha_agregado) 
-                        VALUES (?, ?, ?, ?, ?)`;
+        const consulta = `INSERT INTO carrito (usuario_id, producto_id, detalle_id, cantidad) 
+                        VALUES (?, ?, ?, ?)`;
         const data = req.body;
 
-        if(typeof data.fecha_agregado === "string") {
-            data.fecha_agregado = new Date(data.fecha_agregado);
-        }
-
+        
         const { success, error } = ValidateCart(data);
 
         if(!success){
@@ -64,9 +61,8 @@ export class cartController{
         }
 
         try {
-            const { usuario_id, producto_id, detalle_id, cantidad , fecha_agregado} = data;
-            //const fecha = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            db.query(consulta, [usuario_id, producto_id, detalle_id, cantidad, fecha_agregado], (error, results) => {
+            const { usuario_id, producto_id, detalle_id, cantidad } = data;
+            db.query(consulta, [usuario_id, producto_id, detalle_id, cantidad], (error, results) => {
                 
                 if(error)
                 {
